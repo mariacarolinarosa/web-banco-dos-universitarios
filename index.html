@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banco dos Universitários</title>
+    <!-- Importando o arquivo CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Mockup do Celular com a Imagem Fornecida -->
+    <div class="celular-mockup">
+      <div class="app-window">
+        <!-- INTRODUÇÃO -->
+        <div id="intro-screen" class="screen active">
+          <h2>Apresentação do projeto</h2>
+
+          <p>
+            Este software foi desenvolvido originalmente para uma atividade de
+            Programação com Interfaces Gráficas usando Python e TKinter,
+            proposta na graduação.
+          </p>
+
+          <p>
+            Para permitir a visualização e demonstração diretamente pelo
+            navegador, foi criada esta versão Web. Porém o código da versão
+            original pode ser acessado através do GitHub e executado
+            diretamente, sugiro, no VSCode.
+          </p>
+
+          <div id="intro-countdown">10</div>
+
+          <button type="button" class="btn-primary" onclick="skipIntro()">
+            Pular
+          </button>
+          <button
+            type="button"
+            class="btn-primary"
+            onclick="window.open('https://github.com', '_blank')"
+          >
+            Acessar repositório da versão original
+          </button>
+        </div>
+
+        <!-- TELA PRINCIPAL -->
+        <div id="tela-principal" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+
+          <h2>BANCO DOS UNIVERSITÁRIOS</h2>
+
+          <p>Soluções pensadas para estudantes</p>
+
+          <button class="btn-primary" onclick="nav('tela-abertura-tipo')">
+            ABERTURA DE CONTA
+          </button>
+
+          <button class="btn-secondary" onclick="nav('tela-login-tipo')">
+            ACESSAR CONTA
+          </button>
+
+          <button
+            class="btn-danger"
+            onclick="alert('Sistema encerrado (Simulação)')"
+          >
+            SAIR
+          </button>
+        </div>
+
+        <!-- TELA DE ESCOLHA DE LOGIN -->
+        <div id="tela-login-tipo" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+          <h2>ESCOLHA O TIPO DE ACESSO</h2>
+          <button class="btn-primary" onclick="nav('tela-login-cliente')">
+            CLIENTE
+          </button>
+          <button class="btn-primary" onclick="nav('tela-login-admin')">
+            ADMINISTRADOR
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-principal')">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- LOGIN CLIENTE -->
+        <div id="tela-login-cliente" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+          <h2>ÁREA DO CLIENTE</h2>
+          <div class="input-group">
+            <label>Agência:</label>
+            <input type="text" id="login-agencia" value="0219" />
+          </div>
+          <div class="input-group">
+            <label>Número da conta (CCXXXXX-X ou CPXXXXX-X):</label>
+            <input type="text" id="login-conta" />
+          </div>
+          <div class="input-group">
+            <label>Senha:</label>
+            <input type="password" id="login-senha" />
+          </div>
+          <button class="btn-primary" onclick="efetuarLogin()">
+            ACESSAR CONTA
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-login-tipo')">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- LOGIN ADMIN -->
+        <div id="tela-login-admin" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+          <h2>ÁREA DO ADMINISTRADOR</h2>
+          <div class="input-group">
+            <label>Nº de identificação (dica: 000):</label>
+            <input type="password" id="login-admin-cod" />
+          </div>
+          <button class="btn-primary" onclick="loginAdmin()">
+            ACESSAR CONTA
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-login-tipo')">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- TELA ESCOLHA ABERTURA -->
+        <div id="tela-abertura-tipo" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+          <h2>SELECIONE O TIPO DE CONTA</h2>
+          <button class="btn-primary" onclick="prepararAbertura('CC')">
+            CONTA CORRENTE
+          </button>
+          <button class="btn-primary" onclick="prepararAbertura('CP')">
+            CONTA POUPANÇA
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-principal')">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- FORMULÁRIO ABERTURA -->
+        <div id="tela-abertura-form" class="screen">
+          <h2 id="abertura-titulo">ABERTURA DE CONTA</h2>
+          <div class="input-group">
+            <label>Nome completo:</label><input type="text" id="cad-nome" />
+          </div>
+          <div class="input-group">
+            <label>Endereço:</label><input type="text" id="cad-endereco" />
+          </div>
+          <div class="input-group">
+            <label>CPF:</label><input type="text" id="cad-cpf" />
+          </div>
+          <div class="input-group">
+            <label>Senha numérica (6 dígitos):</label
+            ><input type="password" id="cad-senha" />
+          </div>
+          <button class="btn-primary" onclick="criarConta()">
+            CRIAR CONTA
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-abertura-tipo')">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- SUCESSO ABERTURA -->
+        <div id="tela-abertura-sucesso" class="screen">
+          <h2>CONTA CADASTRADA COM SUCESSO!</h2>
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+          <p id="msg-boas-vindas"></p>
+          <div class="input-group">
+            <label>AGÊNCIA</label
+            ><input type="text" id="sucesso-agencia" readonly />
+          </div>
+          <div class="input-group">
+            <label>NÚMERO DA CONTA</label
+            ><input type="text" id="sucesso-conta" readonly />
+          </div>
+          <button class="btn-primary" onclick="nav('tela-principal')">
+            VOLTAR AO MENU PRINCIPAL
+          </button>
+        </div>
+
+        <!-- MENU CLIENTE (DASHBOARD) -->
+        <div id="tela-cliente" class="screen">
+          <h2 id="dash-nome">BEM-VINDO(A)</h2>
+          <div class="card">
+            <h1 id="dash-saldo">R$ 0,00</h1>
+            <p id="dash-limite" style="margin-top: 5px; color: gray"></p>
+          </div>
+          <button class="btn-primary" onclick="nav('tela-transacoes')">
+            REALIZAR TRANSAÇÃO
+          </button>
+          <button class="btn-primary" onclick="gerarExtrato()">
+            EXIBIR EXTRATO
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-principal')">
+            SAIR
+          </button>
+        </div>
+
+        <!-- TRANSAÇÕES -->
+        <div id="tela-transacoes" class="screen">
+          <h2>TRANSAÇÕES DISPONÍVEIS</h2>
+          <button class="btn-primary" onclick="nav('tela-deposito')">
+            DEPOSITAR
+          </button>
+          <button class="btn-primary" onclick="nav('tela-saque')">SACAR</button>
+          <button class="btn-primary" onclick="nav('tela-transferencia')">
+            TRANSFERIR
+          </button>
+          <button class="btn-secondary" onclick="atualizarDashboard()">
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- DEPÓSITO -->
+        <div id="tela-deposito" class="screen">
+          <h2>DEPÓSITO</h2>
+          <div class="input-group">
+            <label>Valor:</label><input type="number" id="val-deposito" />
+          </div>
+          <button class="btn-primary" onclick="efetuarDeposito()">
+            DEPOSITAR HOJE
+          </button>
+          <button class="btn-danger" onclick="nav('tela-transacoes')">
+            CANCELAR
+          </button>
+        </div>
+
+        <!-- SAQUE -->
+        <div id="tela-saque" class="screen">
+          <h2>SAQUE</h2>
+          <div class="input-group">
+            <label>Valor:</label><input type="number" id="val-saque" />
+          </div>
+          <button class="btn-primary" onclick="efetuarSaque()">
+            SACAR HOJE
+          </button>
+          <button class="btn-danger" onclick="nav('tela-transacoes')">
+            CANCELAR
+          </button>
+        </div>
+
+        <!-- TRANSFERÊNCIA -->
+        <div id="tela-transferencia" class="screen">
+          <h2>TRANSFERÊNCIA</h2>
+          <div class="input-group">
+            <label>Conta destino (Ex: CC10000-0):</label
+            ><input type="text" id="val-transf-conta" />
+          </div>
+          <div class="input-group">
+            <label>Valor:</label><input type="number" id="val-transf" />
+          </div>
+          <button class="btn-primary" onclick="efetuarTransferencia()">
+            TRANSFERIR AGORA
+          </button>
+          <button class="btn-danger" onclick="nav('tela-transacoes')">
+            CANCELAR
+          </button>
+        </div>
+
+        <!-- EXTRATO -->
+        <div id="tela-extrato" class="screen">
+          <h2>EXTRATO BANCÁRIO</h2>
+          <div id="extrato-box"></div>
+          <button
+            class="btn-secondary"
+            style="margin-top: 15px"
+            onclick="atualizarDashboard()"
+          >
+            VOLTAR
+          </button>
+        </div>
+
+        <!-- GERENCIAMENTO DE CONTAS -->
+        <div id="tela-gerenciar-contas" class="screen">
+          <img src="logo.png" alt="Logo Banco" class="logo-app" />
+
+          <h2>GERENCIAR CONTAS</h2>
+
+          <p>Contas cadastradas no sistema</p>
+
+          <div id="lista-contas-admin" class="lista-contas-admin">
+            <!-- As contas serão inseridas pelo JavaScript -->
+          </div>
+
+          <button class="btn-secondary" onclick="nav('tela-admin')">
+            VOLTAR
+          </button>
+        </div>
+        <!-- MENU ADMIN -->
+        <div id="tela-admin" class="screen">
+          <h2>BEM-VINDO, ADMINISTRADOR</h2>
+          <button
+            class="btn-primary"
+            class="btn-primary"
+            onclick="abrirGerenciamentoContas()"
+          >
+            GERENCIAMENTO DE CONTAS
+          </button>
+          <button class="btn-secondary" onclick="nav('tela-principal')">
+            VOLTAR AO MENU PRINCIPAL
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Importando o arquivo JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,344 @@
+:root {
+  --bg: #e3f2f9;
+  --primary: #78d1de;
+  --danger: #d26060;
+  --text: #223c5e;
+  --white: #ffffff;
+}
+
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+  margin: 0;
+
+  overflow: hidden;
+}
+
+
+/* ==============================
+   CELULAR
+============================== */
+
+.celular-mockup {
+  position: relative;
+
+  height: 90vh;
+  aspect-ratio: 1 / 1;
+  max-width: 90vh;
+
+  background-image: url("imagem.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* ==============================
+   TELA DO APLICATIVO
+============================== */
+
+.app-window {
+  position: absolute;
+
+  top: 9%;
+  left: 31.16%;
+
+  width: 38%;
+  height: 82%;
+
+  background-color: var(--bg);
+  color: var(--text);
+
+  border-radius: 40px;
+
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  /*
+     A tela do celular permanece fixa.
+     O conteúdo não pode escapar dela.
+  */
+  overflow: hidden;
+}
+
+
+/* ==============================
+   SCROLLBAR INVISÍVEL
+============================== */
+
+.app-window::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.app-window {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+/* ==============================
+   TELAS
+============================== */
+
+.screen {
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  /*
+     SEU ZOOM ORIGINAL
+     permanece exatamente em 140%
+  */
+  zoom: 1.4;
+}
+
+.screen.active {
+  display: flex;
+}
+
+
+/* ==============================
+   TÍTULOS
+============================== */
+
+h2,
+h3 {
+  text-align: center;
+
+  color: var(--text);
+
+  margin-bottom: 20px;
+
+  font-size: 14px;
+}
+
+p {
+  text-align: center;
+
+  font-size: 11px;
+
+  margin-bottom: 15px;
+}
+
+
+/* ==============================
+   INPUTS
+============================== */
+
+.input-group {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.input-group label {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+
+  padding: 6px;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  box-sizing: border-box;
+
+  font-size: 11px;
+}
+
+
+/* ==============================
+   BOTÕES
+============================== */
+
+button {
+  width: 100%;
+  height: 35px;
+
+  margin: 5px 0;
+
+  border: 2px solid rgba(0, 0, 0, 0.1);
+
+  font-weight: bold;
+  font-size: 10px;
+
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: var(--text);
+
+  transition: 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.btn-primary:hover {
+  filter: brightness(0.9);
+}
+
+.btn-secondary {
+  background-color: var(--bg);
+  border-color: var(--text);
+}
+
+.btn-secondary:hover {
+  background-color: #d1e8f5;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+
+  border: none;
+}
+
+.btn-danger:hover {
+  filter: brightness(0.9);
+}
+
+
+/* ==============================
+   CARD
+============================== */
+
+.card {
+  background: white;
+
+  padding: 10px;
+
+  width: 100%;
+
+  border: 1px solid #ccc;
+
+  text-align: center;
+
+  box-sizing: border-box;
+
+  margin-bottom: 20px;
+}
+
+.card h1 {
+  margin: 0;
+
+  font-size: 16px;
+
+  color: var(--text);
+}
+
+
+/* ==============================
+   EXTRATO
+============================== */
+
+#extrato-box {
+  background: white;
+
+  width: 100%;
+  height: 200px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 8px;
+
+  border: 1px solid #ccc;
+
+  font-family: monospace;
+
+  font-size: 9px;
+
+  box-sizing: border-box;
+
+  white-space: pre-wrap;
+
+  text-align: left;
+}
+
+
+/* ==============================
+   EVITA ESTOURAR HORIZONTALMENTE
+============================== */
+
+img,
+input,
+button,
+.card,
+#extrato-box {
+  max-width: 100%;
+}
+
+
+/* ==============================
+   GERENCIAMENTO DE CONTAS
+============================== */
+
+.lista-contas-admin {
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.lista-contas-admin::-webkit-scrollbar {
+  width: 0;
+}
+
+.lista-contas-admin {
+  scrollbar-width: none;
+}
+
+.conta-admin-card {
+  width: 100%;
+  background-color: var(--white);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.conta-admin-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 11px;
+  text-align: left;
+}
+
+.conta-admin-info {
+  font-size: 9px;
+  margin: 2px 0;
+  text-align: left;
+}
+
+.conta-admin-acoes {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.conta-admin-acoes button {
+  flex: 1;
+  height: 28px;
+  margin: 0;
+  font-size: 8px;
+}
