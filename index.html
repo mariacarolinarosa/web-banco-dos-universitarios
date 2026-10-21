@@ -289,19 +289,27 @@
 
 
         <!-- DETALHES CONTA -->
-        <div class="detalhes-conta">
-          <p><strong>Titular:</strong> <span id="det-titular"></span></p>
-          <p><strong>CPF:</strong> <span id="det-cpf"></span></p>
-          <p><strong>Endereço:</strong> <span id="det-endereco"></span></p>
-          <p><strong>Tipo de conta:</strong> <span id="det-tipo"></span></p>
-          <p><strong>Agência:</strong> <span id="det-agencia"></span></p>
-          <p><strong>Número da conta:</strong> <span id="det-numero"></span></p>
-          <p><strong>Saldo:</strong> <span id="det-saldo"></span></p>
-          <p id="det-limite-container">
-              <strong>Cheque especial:</strong>
-              <span id="det-limite"></span>
-          </p>
-      </div>
+          <div id="tela-detalhes-conta" class="screen">
+            <h2>DETALHES DA CONTA</h2>
+
+            <div class="detalhes-conta">
+              <p><strong>Titular:</strong> <span id="det-titular"></span></p>
+              <p><strong>CPF:</strong> <span id="det-cpf"></span></p>
+              <p><strong>Endereço:</strong> <span id="det-endereco"></span></p>
+              <p><strong>Tipo de conta:</strong> <span id="det-tipo"></span></p>
+              <p><strong>Agência:</strong> <span id="det-agencia"></span></p>
+              <p><strong>Número da conta:</strong> <span id="det-numero"></span></p>
+              <p><strong>Saldo:</strong> <span id="det-saldo"></span></p>
+              <p id="det-limite-container">
+                <strong>Cheque especial:</strong>
+                <span id="det-limite"></span>
+              </p>
+            </div>
+
+            <button class="btn-secondary" onclick="nav('tela-gerenciar-contas')">
+              VOLTAR
+            </button>
+          </div>
 
         <!-- MENU ADMIN -->
         <div id="tela-admin" class="screen">

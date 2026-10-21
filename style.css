@@ -291,55 +291,39 @@ button,
 /* ==============================
    GERENCIAMENTO DE CONTAS
 ============================== */
-
-
-/* Alinhamento da tela de detalhes da conta */
+/* ESTILOS EXCLUSIVOS DOS DETALHES DA CONTA */
 #tela-detalhes-conta {
-    align-items: stretch;
-    text-align: left;
+  align-items: stretch;
 }
 
-#tela-detalhes-conta h2 {
-    text-align: center;
-}
-
-#tela-detalhes-conta .card {
-    text-align: left;
-}
-
-#tela-detalhes-conta .card p {
-    text-align: left;
-    margin: 6px 0;
-}
-
-#tela-detalhes-conta .card h3 {
-    text-align: left;
-    margin: 6px 0;
-}
-
-#tela-detalhes-conta button {
-    text-align: center;
-}
-
-/* Detalhes da conta alinhados lado a lado */
 #tela-detalhes-conta .detalhes-conta {
-    width: 100%;
-    text-align: left;
+  width: 100%;
+  padding: 10px;
+  background: var(--white);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 #tela-detalhes-conta .detalhes-conta p {
-    text-align: left;
-    font-size: 10px;
-    margin: 8px 0;
-    overflow-wrap: anywhere;
+  text-align: left;
+  font-size: 10px;
+  margin: 8px 0;
+  overflow-wrap: anywhere;
 }
 
-#tela-detalhes-conta .detalhes-conta strong {
-    display: inline;
-}
-
+#tela-detalhes-conta .detalhes-conta strong,
 #tela-detalhes-conta .detalhes-conta span {
-    display: inline;
+  display: inline;
+}
+
+#tela-detalhes-conta h2 {
+  text-align: center;
+}
+
+#tela-detalhes-conta button {
+  text-align: center;
 }
 
 .lista-contas-admin {
