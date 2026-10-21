@@ -805,28 +805,46 @@ function excluirContaAdmin(numero) {
 }
 
 function verDetalhesContaAdmin(numero) {
-
     const conta =
         Banco.contasCorrente.find(c => c.numero === numero) ||
         Banco.contaPoupanca.find(c => c.numero === numero);
 
     if (!conta) {
-        alert("Conta não encontrada.");
+        mostrarErro("Conta não encontrada.", "tela-gerenciar-contas");
         return;
     }
 
-    const tipo = conta.tipoConta === 'CORRENTE'
-        ? 'Conta Corrente'
-        : 'Conta Poupança';
+    const tipo = conta.tipoConta === "CORRENTE"
+        ? "Conta Corrente"
+        : "Conta Poupança";
 
-    alert(
-        `DADOS DA CONTA\n\n` +
-        `Titular: ${conta.titular}\n` +
-        `CPF: ${conta.cpf}\n` +
-        `Endereço: ${conta.endereco}\n` +
-        `Tipo: ${tipo}\n` +
-        `Agência: ${conta.agencia}\n` +
-        `Conta: ${conta.numero}\n` +
-        `Saldo: R$ ${formatarMoeda(conta.saldo)}`
-    );
+    document.getElementById("det-titular").textContent = conta.titular;
+    document.getElementById("det-cpf").textContent = conta.cpf;
+    document.getElementById("det-endereco").textContent = conta.endereco;
+    document.getElementById("det-tipo").textContent = tipo;
+    document.getElementById("det-agencia").textContent = conta.agencia;
+    document.getElementById("det-numero").textContent = conta.numero;
+
+    document.getElementById("det-saldo").textContent =
+        "R$ " + Number(conta.saldo).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    const limiteContainer =
+        document.getElementById("det-limite-container");
+
+    if (conta.tipoConta === "CORRENTE") {
+        limiteContainer.style.display = "block";
+
+        document.getElementById("det-limite").textContent =
+            "R$ " + Number(conta.limite).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+    } else {
+        limiteContainer.style.display = "none";
+    }
+
+    nav("tela-detalhes-conta");
 }
