@@ -12,6 +12,13 @@ const Banco = {
 };
 
 // --- FUNÇÕES AUXILIARES DE VALIDAÇÃO E FORMATAÇÃO ---
+function formatarMoeda(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
 function gerarNumeroConta(prefixo) {
     const num = ultimoSequencial++;
     const digito = num % 10;
@@ -119,7 +126,7 @@ class Conta {
 
     formatarTransacao(t) {
         const dataStr = formatarData(t.data);
-        const valStr = Math.abs(t.valor).toFixed(2).replace('.', ',');
+        const valStr = formatarMoeda(Math.abs(t.valor));
         if (["Taxa de manutenção projetada", "Rendimento projetado", "Rendimento total projetado"].includes(t.tipo)) {
             return `${t.tipo} - R$ ${valStr} - ${dataStr}`;
         }
@@ -286,17 +293,17 @@ function executarDeposito(conta, valor, data = new Date(), desc = "") {
     conta.adicionarTransacao("Depósito", valorOriginal, data, desc);
 }
 
-function executarSaqueInterno(conta, valor, data = new Date(), permitirCheque = true) {
+function executarSaqueInterno(conta, valor, data = new Date(), permitirCheque = true, tipoTransacao = "Saque") {
     if (valor <= 0) return { sucesso: false, usado: 0 };
     if (conta instanceof ContaPoupanca) {
         if (valor > conta.saldo) return { sucesso: false, usado: 0 };
         conta.saldo -= valor;
-        conta.adicionarTransacao("Saque", valor, data);
+        conta.adicionarTransacao(tipoTransacao, valor, data);
         return { sucesso: true, usado: 0 };
     }
     if (valor <= conta.saldo) {
         conta.saldo -= valor;
-        conta.adicionarTransacao("Saque", valor, data);
+        conta.adicionarTransacao(tipoTransacao, valor, data);
         return { sucesso: true, usado: 0 };
     }
     let valorCheque = valor - conta.saldo;
@@ -305,7 +312,14 @@ function executarSaqueInterno(conta, valor, data = new Date(), permitirCheque = 
     }
     conta.saldo -= valor;
     conta.limite -= valorCheque;
-    conta.adicionarTransacao("Saque com cheque especial", valor, data, `Cheque especial utilizado: R$ ${valorCheque.toFixed(2)}`);
+    conta.adicionarTransacao(
+        tipoTransacao === "Saque"
+            ? "Saque com cheque especial"
+            : tipoTransacao,
+        valor,
+        data,
+        `Cheque especial utilizado: R$ ${formatarMoeda(valorCheque)}`
+    );
     return { sucesso: true, usado: valorCheque };
 }
 
@@ -469,11 +483,11 @@ function loginAdmin() {
 function atualizarDashboard() {
     const c = Banco.contaLogada;
     document.getElementById('dash-nome').innerText = `BEM-VINDO(A),\n${c.titular}`;
-    document.getElementById('dash-saldo').innerText = `R$ ${c.saldo.toFixed(2).replace('.', ',')}`;
+    document.getElementById('dash-saldo').innerText = `R$ ${formatarMoeda(c.saldo)}`;
 
     const labelLimite = document.getElementById('dash-limite');
     if (c.tipoConta === "CORRENTE") {
-        labelLimite.innerText = `Cheque Especial: R$ ${c.limite.toFixed(2).replace('.', ',')}`;
+        labelLimite.innerText = `Cheque Especial: R$ ${formatarMoeda(c.limite)}`;
     } else {
         labelLimite.innerText = "";
     }
@@ -506,7 +520,7 @@ function efetuarSaque() {
         if (c instanceof ContaCorrente && val > c.saldo) {
             let necessario = val - c.saldo;
             if (necessario > c.limite) throw new Error("Saldo + Cheque Especial insuficientes.");
-            if (!confirm(`Será utilizado R$ ${necessario.toFixed(2)} do Cheque Especial. Continuar?`)) return;
+            if (!confirm(`Será utilizado R$ ${formatarMoeda(necessario)} do Cheque Especial. Continuar?`)) return;
         }
 
         let res = executarSaqueInterno(c, val, new Date(), permitirCheque);
@@ -536,10 +550,16 @@ function efetuarTransferencia() {
         if (cOrigem instanceof ContaCorrente && val > cOrigem.saldo) {
             let necessario = val - cOrigem.saldo;
             if (necessario > cOrigem.limite) throw new Error("Saldo insuficiente.");
-            if (!confirm(`Será utilizado R$ ${necessario.toFixed(2)} do Cheque Especial. Continuar?`)) return;
+            if (!confirm(`Será utilizado R$ ${formatarMoeda(necessario)} do Cheque Especial. Continuar?`)) return;
         }
 
-        let res = executarSaqueInterno(cOrigem, val, new Date(), permitirCheque);
+        let res = executarSaqueInterno(
+            cOrigem,
+            val,
+            new Date(),
+            permitirCheque,
+            "Transferência enviada"
+        );
         if (!res.sucesso) throw new Error("Saldo insuficiente.");
 
         cDestino.saldo += val;
@@ -562,10 +582,10 @@ function gerarExtrato() {
 
 function renderizarExtrato(listaTransacoes = null) {
     const c = Banco.contaLogada;
-    let html = `Ag: ${c.agencia} | CC: ${c.numero}\nTitular: ${c.titular}\nSaldo: R$ ${c.saldo.toFixed(2).replace('.', ',')}\n`;
+    let html = `Ag: ${c.agencia} | CC: ${c.numero}\nTitular: ${c.titular}\nSaldo: R$ ${formatarMoeda(c.saldo)}\n`;
 
     if (c instanceof ContaCorrente) {
-        html += `Cheque Especial: R$ ${c.limite.toFixed(2).replace('.', ',')}\n`;
+        html += `Cheque Especial: R$ ${formatarMoeda(c.limite)}\n`;
     }
 
     html += `\nHistórico:\n=====================\n`;
@@ -635,7 +655,7 @@ function listarContasAdmin() {
     }
     let relatorio = "CONTAS CADASTRADAS:\n\n";
     contas.forEach(c => {
-        relatorio += `${c.tipoConta} | ${c.numero} | ${c.titular} | Saldo: R$ ${c.saldo.toFixed(2)}\n`;
+        relatorio += `${c.tipoConta} | ${c.numero} | ${c.titular} | Saldo: R$ ${formatarMoeda(c.saldo)}\n`;
     });
     alert(relatorio);
 }
@@ -721,7 +741,7 @@ function abrirGerenciamentoContas() {
 
             <div class="conta-admin-info">
                 <strong>Saldo:</strong>
-                R$ ${Number(conta.saldo).toFixed(2).replace('.', ',')}
+                R$ ${formatarMoeda(conta.saldo)}
             </div>
 
             <div class="conta-admin-acoes">
@@ -807,6 +827,6 @@ function verDetalhesContaAdmin(numero) {
         `Tipo: ${tipo}\n` +
         `Agência: ${conta.agencia}\n` +
         `Conta: ${conta.numero}\n` +
-        `Saldo: R$ ${Number(conta.saldo).toFixed(2).replace('.', ',')}`
+        `Saldo: R$ ${formatarMoeda(conta.saldo)}`
     );
 }
