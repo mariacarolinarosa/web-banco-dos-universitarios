@@ -292,6 +292,56 @@ button,
    GERENCIAMENTO DE CONTAS
 ============================== */
 
+
+/* Alinhamento da tela de detalhes da conta */
+#tela-detalhes-conta {
+    align-items: stretch;
+    text-align: left;
+}
+
+#tela-detalhes-conta h2 {
+    text-align: center;
+}
+
+#tela-detalhes-conta .card {
+    text-align: left;
+}
+
+#tela-detalhes-conta .card p {
+    text-align: left;
+    margin: 6px 0;
+}
+
+#tela-detalhes-conta .card h3 {
+    text-align: left;
+    margin: 6px 0;
+}
+
+#tela-detalhes-conta button {
+    text-align: center;
+}
+
+/* Detalhes da conta alinhados lado a lado */
+#tela-detalhes-conta .detalhes-conta {
+    width: 100%;
+    text-align: left;
+}
+
+#tela-detalhes-conta .detalhes-conta p {
+    text-align: left;
+    font-size: 10px;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+#tela-detalhes-conta .detalhes-conta strong {
+    display: inline;
+}
+
+#tela-detalhes-conta .detalhes-conta span {
+    display: inline;
+}
+
 .lista-contas-admin {
   width: 100%;
   max-height: 300px;
